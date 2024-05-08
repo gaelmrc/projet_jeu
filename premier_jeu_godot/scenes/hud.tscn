@@ -1,0 +1,77 @@
+[gd_scene load_steps=3 format=3 uid="uid://to10rp3j7j48"]
+
+[ext_resource type="FontFile" uid="uid://3lww0opmq1u0" path="res://Pixeled.ttf" id="1_ni7ed"]
+[ext_resource type="Script" path="res://scenes/hud.gd" id="1_y41cp"]
+
+[node name="HUD" type="CanvasLayer"]
+script = ExtResource("1_y41cp")
+
+[node name="ScoreLabel" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -64.0
+offset_right = 64.0
+offset_bottom = 180.0
+grow_horizontal = 2
+theme_override_fonts/font = ExtResource("1_ni7ed")
+theme_override_font_sizes/font_size = 64
+text = "24"
+horizontal_alignment = 1
+
+[node name="Message" type="Label" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -244.0
+offset_top = -358.0
+offset_right = 236.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/line_spacing = -45
+theme_override_fonts/font = ExtResource("1_ni7ed")
+theme_override_font_sizes/font_size = 40
+text = "DODGE BOMBS AND MICE !"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="StartButton" type="Button" parent="."]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -196.0
+offset_top = -120.0
+offset_right = 196.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_fonts/font = ExtResource("1_ni7ed")
+theme_override_font_sizes/font_size = 40
+text = "Start
+"
+
+[node name="MessageTimer" type="Timer" parent="."]
+wait_time = 1.5
+one_shot = true
+
+[node name="Titre" type="Label" parent="."]
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -244.0
+offset_right = 232.0
+offset_bottom = 363.0
+grow_horizontal = 2
+theme_override_constants/line_spacing = -60
+theme_override_fonts/font = ExtResource("1_ni7ed")
+theme_override_font_sizes/font_size = 64
+text = "FRIPZ, THE CAT"
+horizontal_alignment = 1
+autowrap_mode = 3
+
+[connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="timeout" from="MessageTimer" to="." method="_on_message_timer_timeout"]
