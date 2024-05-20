@@ -31,24 +31,14 @@ func _on_mob_timer_timeout():
 	var mob = mob_scene.instantiate()
 	var mob_spawn_location = get_node("MobPath/MobSpawnLocation")
 	mob_spawn_location.progress_ratio = randf()
-	if mob_spawn_location.progress_ratio < 0.2:
-		pass
-	elif mob_spawn_location.progress_ratio < 0.5:
-		pass
-	elif mob_spawn_location.progress_ratio < 0.7:
-		pass
-	elif mob_spawn_location.progress_ratio < 1:
-		pass
-	
+	GameManager.update_position(mob_spawn_location.progress_ratio)
 	var direction = mob_spawn_location.rotation + PI/2;
-	
-	
 	mob.position = mob_spawn_location.position;
 	
 	var velocity = Vector2(randf_range(150.0,250.0), 0.0)
 	mob.linear_velocity = velocity.rotated(direction)
 	add_child(mob)
-
+	#Si bombe alors démarrer le bombtimer, à la fin du bomb timer, virer la bombe.
 
 func _on_hud_start_game():
 	pass # Replace with function body.

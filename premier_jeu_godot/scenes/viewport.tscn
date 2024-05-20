@@ -1,0 +1,16 @@
+[gd_scene load_steps=2 format=3 uid="uid://dpe2wkyqgurtw"]
+
+[ext_resource type="Texture2D" uid="uid://cesws28yiifly" path="res://sprites/terrain3sprite.png" id="1_m5343"]
+
+[node name="Viewport" type="Node"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+process_priority = -10
+show_behind_parent = true
+z_index = -5
+z_as_relative = false
+texture_filter = 1
+offset_right = 480.0
+offset_bottom = 720.0
+texture = ExtResource("1_m5343")
+expand_mode = 1

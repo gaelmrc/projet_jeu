@@ -213,8 +213,8 @@ animations = [{
 }]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_248vt"]
-radius = 8.0
-height = 22.0
+radius = 22.0
+height = 44.0
 
 [node name="RigidBody2D" type="RigidBody2D"]
 collision_mask = 0
@@ -226,9 +226,13 @@ texture_filter = 1
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_1wvjx")
 animation = &"bomb"
-frame_progress = 0.457027
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CapsuleShape2D_248vt")
+
+[node name="BTimer" type="Timer" parent="."]
+wait_time = 1.6
+
+[connection signal="timeout" from="BTimer" to="." method="_on_b_timer_timeout"]
