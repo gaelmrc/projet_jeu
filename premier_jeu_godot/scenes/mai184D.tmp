@@ -1,11 +1,10 @@
-[gd_scene load_steps=8 format=3 uid="uid://dke7t1d3vgqq7"]
+[gd_scene load_steps=7 format=3 uid="uid://dke7t1d3vgqq7"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_0lcs8"]
 [ext_resource type="PackedScene" uid="uid://ciux38k0bf1a" path="res://scenes/cat.tscn" id="1_p36ap"]
 [ext_resource type="PackedScene" uid="uid://dst1yjwh8x277" path="res://scenes/mouse.tscn" id="2_ne4k0"]
 [ext_resource type="PackedScene" uid="uid://dpe2wkyqgurtw" path="res://scenes/viewport.tscn" id="3_cgifp"]
 [ext_resource type="PackedScene" uid="uid://to10rp3j7j48" path="res://scenes/hud.tscn" id="4_7xut6"]
-[ext_resource type="Texture2D" uid="uid://pbhvwd0wab54" path="res://sprites/coeur.png" id="6_ir1im"]
 
 [sub_resource type="Curve2D" id="Curve2D_lsdnp"]
 _data = {
@@ -20,6 +19,7 @@ mob_scene = ExtResource("2_ne4k0")
 [node name="Viewport" parent="." instance=ExtResource("3_cgifp")]
 
 [node name="Cat" parent="." instance=ExtResource("1_p36ap")]
+speed = 300
 
 [node name="MobTimer" type="Timer" parent="."]
 wait_time = 0.5
@@ -41,36 +41,6 @@ curve = SubResource("Curve2D_lsdnp")
 [node name="MobSpawnLocation" type="PathFollow2D" parent="MobPath"]
 
 [node name="HUD" parent="." instance=ExtResource("4_7xut6")]
-
-[node name="HeartsContainer" type="HBoxContainer" parent="."]
-texture_filter = 1
-offset_left = 16.0
-offset_top = 16.0
-offset_right = 192.0
-offset_bottom = 56.0
-
-[node name="Heart1" type="TextureRect" parent="HeartsContainer"]
-texture_filter = 1
-custom_minimum_size = Vector2(-5, 0)
-layout_mode = 2
-size_flags_stretch_ratio = 0.0
-texture = ExtResource("6_ir1im")
-expand_mode = 3
-stretch_mode = 4
-
-[node name="Heart2" type="TextureRect" parent="HeartsContainer"]
-texture_filter = 1
-layout_mode = 2
-texture = ExtResource("6_ir1im")
-expand_mode = 3
-stretch_mode = 4
-
-[node name="Heart3" type="TextureRect" parent="HeartsContainer"]
-texture_filter = 1
-layout_mode = 2
-texture = ExtResource("6_ir1im")
-expand_mode = 3
-stretch_mode = 4
 
 [connection signal="hit" from="Cat" to="." method="game_over"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]

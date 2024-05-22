@@ -36,10 +36,18 @@ func _process(delta):
 
 
 func _on_body_entered(body):
-	hide()
-	hit.emit()
-	$CollisionShape2D.set_deferred("disabled", true)
-
+	var script = body.get_script()
+	var enemy_type = body.enemy_type
+	if enemy_type == "bomb":
+		GameManager.lose_live()
+		if GameManager.lives == 0:
+			$CollisionShape2D.set_deferred("disabled", true)
+			hide()
+			hit.emit()
+	if enemy_type != "bomb":
+		GameManager.score +=10
+	body.queue_free()
+	
 func start(pos):
 	position = pos
 	show()

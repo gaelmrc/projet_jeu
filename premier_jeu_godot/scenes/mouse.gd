@@ -1,8 +1,11 @@
 extends RigidBody2D
 
+var enemy_type : String
+
 func _ready():
 	var mob_types = $AnimatedSprite2D.sprite_frames.get_animation_names()
 	var animation = mob_types[randi() % mob_types.size()]
+	enemy_type = animation
 	var mob_position = GameManager.mob_position 
 	GameManager.update_animation(animation)
 	if animation != "bomb":
@@ -26,4 +29,4 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 	queue_free()
 
 func _on_b_timer_timeout():
-	queue_free() # Replace with function body.
+	queue_free() 

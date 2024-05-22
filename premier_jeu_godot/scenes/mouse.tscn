@@ -223,9 +223,11 @@ script = ExtResource("1_prfnw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+position = Vector2(-1, -13)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_1wvjx")
 animation = &"bomb"
+frame_progress = 0.135606
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 

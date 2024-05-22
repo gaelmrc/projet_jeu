@@ -1,32 +1,56 @@
 extends Node
+var heart1
+var heart2
+var heart3
 
 @export var mob_scene : PackedScene
-var score 
 
 func _ready():
-	pass
-
+	heart1 = get_node("HeartsContainer/Heart1")
+	heart2 = get_node("HeartsContainer/Heart2")
+	heart3 = get_node("HeartsContainer/Heart3")
+	
+func _process(delta):
+	$HUD.update_score(GameManager.score)
+	if GameManager.lives == 3:
+		heart1.visible = true
+		heart2.visible = true
+		heart3.visible = true
+	elif GameManager.lives == 2:
+		heart1.visible = true
+		heart2.visible = true
+		heart3.visible = false
+	elif GameManager.lives == 1:
+		heart1.visible = true
+		heart2.visible = false
+		heart3.visible = false
+	elif GameManager.lives == 0:
+		heart1.visible = false
+		heart2.visible = false
+		heart3.visible = false
+		
 func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
 	$HUD.show_game_over()
-	
+		
 	
 func new_game():
-	score = 0
+	GameManager.score = 0
 	$Cat.start($StartPosition.position)
 	$StartTimer.start()
-	$HUD.update_score(score)
+	$HUD.update_score(GameManager.score)
 	$HUD.show_message("GET READY")
-	
 	
 func _on_start_timer_timeout():
 	$MobTimer.start()
 	$ScoreTimer.start()
+	GameManager.lives = 3
 
 func _on_score_timer_timeout():
-	score += 1
-	$HUD.update_score(score)
+	GameManager.score += 1
+	$HUD.update_score(GameManager.score)
+	
 func _on_mob_timer_timeout():
 	var mob = mob_scene.instantiate()
 	var mob_spawn_location = get_node("MobPath/MobSpawnLocation")
