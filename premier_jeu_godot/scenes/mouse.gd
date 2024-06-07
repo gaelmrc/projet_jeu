@@ -3,6 +3,9 @@ extends RigidBody2D
 var enemy_type : String
 var animation_hit
 
+func _process(delta):
+	pass
+	
 func _ready():
 	var mob_types = $AnimatedSprite2D.sprite_frames.get_animation_names()
 	var animation = mob_types[randi() % mob_types.size()]
@@ -17,6 +20,7 @@ func _ready():
 			$AnimatedSprite2D.play("horizontal")
 		elif mob_position<0.7:
 			$AnimatedSprite2D.play("vertical")
+			
 		else :
 			$AnimatedSprite2D.play("horizontal")
 	else : 
@@ -32,12 +36,18 @@ func _on_visible_on_screen_notifier_2d_screen_exited():
 func _on_b_timer_timeout():
 	queue_free() 
 
-#func play_animation():
-#	animation_hit = get_node("AnimationPlayer")
-#	var damage_animation = animation_hit.get_animation("mouse_hit")	
-#	
-#	damage_animation.track_insert_key(1, 0.0, position)
-#	damage_animation.track_insert_key(1, 0.1, position + Vector2(0, -10))
-#	damage_animation.track_insert_key(1, 0.2, position)
-#	
-#	animation_hit.play("mouse_hit")
+func play_animation():
+	animation_hit = get_node("AnimationPlayer")
+	var damage_animation = animation_hit.get_animation("mouse_hit")	
+	
+	damage_animation.track_insert_key(0, 0.0, position)
+	damage_animation.track_insert_key(0, 0.1, position + Vector2(0, -10))
+	damage_animation.track_insert_key(0, 0.2, position)
+	
+	animation_hit.play("mouse_hit")
+	await animation_hit.animation_finished
+	queue_free()
+
+
+func _on_animation_player_animation_finished(anim_name):
+	pass # Replace with function body.

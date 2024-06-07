@@ -78,3 +78,5 @@ func _on_hud_start_game():
 func _on_animation_player_animation_finished(anim_name):
 	if anim_name == "Game_over":
 		$HUD.show_game_over()
+
+

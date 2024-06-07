@@ -1,5 +1,6 @@
 extends Area2D
 signal hit
+signal eat_mouse
 
 @export var speed = 300;
 @onready var animation_player = $AnimationPlayer
@@ -53,9 +54,12 @@ func _on_body_entered(body):
 			$CollisionShape2D.set_deferred("disabled", true)
 			hide()
 			hit.emit()
+		body.queue_free()
 	if enemy_type != "bomb":
+		GameManager.eat_mouse = true
 		GameManager.score +=10
-	body.queue_free()
+		body.play_animation()
+		
 	
 func start(pos):
 	position = pos
