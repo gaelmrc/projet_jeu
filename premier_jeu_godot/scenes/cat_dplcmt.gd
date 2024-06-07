@@ -2,7 +2,13 @@ extends Area2D
 signal hit
 
 @export var speed = 300;
+@onready var animation_player = $AnimationPlayer
 var screen_size;
+var animation_hit
+var initial_position
+var hit_cat
+
+
 
 func _ready():
 	screen_size = get_viewport_rect().size
@@ -36,11 +42,14 @@ func _process(delta):
 
 
 func _on_body_entered(body):
+	hit_cat = false
 	var script = body.get_script()
 	var enemy_type = body.enemy_type
 	if enemy_type == "bomb":
+		play_damage_animation()
 		GameManager.lose_live()
 		if GameManager.lives == 0:
+			rotation = 0
 			$CollisionShape2D.set_deferred("disabled", true)
 			hide()
 			hit.emit()
@@ -52,3 +61,23 @@ func start(pos):
 	position = pos
 	show()
 	$CollisionShape2D.disabled = false
+
+func play_damage_animation():
+	animation_hit = get_node("AnimationPlayer")
+	var damage_animation = animation_hit.get_animation("Damage_Animation")	
+	
+	#POSITION
+	#damage_animation.add_track(Animation.TYPE_VALUE)
+	#damage_animation.track_set_path(0, "position")
+	
+	damage_animation.track_insert_key(2, 0.0, position)
+	damage_animation.track_insert_key(2, 0.1, position + Vector2(0, -10))
+	damage_animation.track_insert_key(2, 0.2, position)
+	
+	animation_hit.play("Damage_Animation")
+	
+
+
+func _on_animation_player_animation_finished(anim_name):
+	pass
+	# Replace with function body.

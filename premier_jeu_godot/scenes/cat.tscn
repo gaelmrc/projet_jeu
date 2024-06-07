@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://ciux38k0bf1a"]
+[gd_scene load_steps=33 format=3 uid="uid://ciux38k0bf1a"]
 
 [ext_resource type="Script" path="res://scenes/cat_dplcmt.gd" id="1_d6koa"]
 [ext_resource type="Texture2D" uid="uid://ikb2dj6wkr88" path="res://sprites/cat_lat_sheet.png" id="2_j5awo"]
@@ -189,6 +189,67 @@ animations = [{
 radius = 6.4
 height = 16.0
 
+[sub_resource type="Animation" id="Animation_8v66h"]
+resource_name = "Damage_Animation"
+length = 0.2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(0.854902, 0, 0.0470588, 1), Color(1, 1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.1, 0.15),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, -0.122173, 0.122173, 0.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(),
+"transitions": PackedFloat32Array(),
+"update": 0,
+"values": []
+}
+
+[sub_resource type="Animation" id="Animation_1h80r"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 1)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_laeel"]
+_data = {
+"Damage_Animation": SubResource("Animation_8v66h"),
+"RESET": SubResource("Animation_1h80r")
+}
+
 [node name="Cat" type="Area2D"]
 scale = Vector2(5, 5)
 script = ExtResource("1_d6koa")
@@ -203,4 +264,10 @@ animation = &"up"
 position = Vector2(0, 2.38419e-07)
 shape = SubResource("CapsuleShape2D_eb7ut")
 
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_laeel")
+}
+
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="animation_finished" from="AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

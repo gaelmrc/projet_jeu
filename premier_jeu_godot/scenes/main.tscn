@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://dke7t1d3vgqq7"]
+[gd_scene load_steps=12 format=3 uid="uid://dke7t1d3vgqq7"]
 
 [ext_resource type="Script" path="res://scenes/main.gd" id="1_0lcs8"]
 [ext_resource type="PackedScene" uid="uid://ciux38k0bf1a" path="res://scenes/cat.tscn" id="1_p36ap"]
@@ -6,12 +6,74 @@
 [ext_resource type="PackedScene" uid="uid://dpe2wkyqgurtw" path="res://scenes/viewport.tscn" id="3_cgifp"]
 [ext_resource type="PackedScene" uid="uid://to10rp3j7j48" path="res://scenes/hud.tscn" id="4_7xut6"]
 [ext_resource type="Texture2D" uid="uid://pbhvwd0wab54" path="res://sprites/coeur.png" id="6_ir1im"]
+[ext_resource type="Texture2D" uid="uid://cd4mjtkhuvqk7" path="res://sprites/fripz.png" id="7_oj6di"]
 
 [sub_resource type="Curve2D" id="Curve2D_lsdnp"]
 _data = {
 "points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 480, 0, 0, 0, 0, 0, 480, 720, 0, 0, 0, 0, 0, 720, 0, 0, 0, 0, 0, 0)
 }
 point_count = 5
+
+[sub_resource type="Animation" id="Animation_02opm"]
+resource_name = "Game_over"
+length = 2.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GameOver_anim:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.1, 1.7, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 0), Vector2(2.2, 2.2), Vector2(1e-05, 1e-05)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GameOver_anim:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1.1, 1.7, 2.4),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.0, 9.42478, 18.8496]
+}
+
+[sub_resource type="Animation" id="Animation_fqnmc"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("GameOver_anim:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1.09931, 1.24783)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("GameOver_anim:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_nncuw"]
+_data = {
+"Game_over": SubResource("Animation_02opm"),
+"RESET": SubResource("Animation_fqnmc")
+}
 
 [node name="Main" type="Node"]
 script = ExtResource("1_0lcs8")
@@ -31,6 +93,9 @@ wait_time = 2.0
 one_shot = true
 
 [node name="BombTimer" type="Timer" parent="."]
+
+[node name="WaitTimer" type="Timer" parent="."]
+wait_time = 0.2
 
 [node name="StartPosition" type="Marker2D" parent="."]
 position = Vector2(240, 500)
@@ -72,9 +137,21 @@ texture = ExtResource("6_ir1im")
 expand_mode = 3
 stretch_mode = 4
 
+[node name="GameOver_anim" type="Sprite2D" parent="."]
+position = Vector2(238, 360)
+scale = Vector2(1.09931, 1.24783)
+texture = ExtResource("7_oj6di")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="GameOver_anim"]
+root_node = NodePath("../..")
+libraries = {
+"": SubResource("AnimationLibrary_nncuw")
+}
+
 [connection signal="hit" from="Cat" to="." method="game_over"]
 [connection signal="timeout" from="MobTimer" to="." method="_on_mob_timer_timeout"]
 [connection signal="timeout" from="ScoreTimer" to="." method="_on_score_timer_timeout"]
 [connection signal="timeout" from="StartTimer" to="." method="_on_start_timer_timeout"]
 [connection signal="timeout" from="BombTimer" to="." method="_on_bomb_timer_timeout"]
 [connection signal="start_game" from="HUD" to="." method="new_game"]
+[connection signal="animation_finished" from="GameOver_anim/AnimationPlayer" to="." method="_on_animation_player_animation_finished"]

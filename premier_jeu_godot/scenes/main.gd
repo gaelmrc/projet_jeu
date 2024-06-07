@@ -1,15 +1,21 @@
 extends Node
+
+@export var mob_scene : PackedScene
+
 var heart1
 var heart2
 var heart3
-
-@export var mob_scene : PackedScene
+var animation_player
+var game_over_sprite
 
 func _ready():
 	heart1 = get_node("HeartsContainer/Heart1")
 	heart2 = get_node("HeartsContainer/Heart2")
 	heart3 = get_node("HeartsContainer/Heart3")
-	
+	game_over_sprite = get_node("GameOver_anim")
+	animation_player = $GameOver_anim/AnimationPlayer 
+	game_over_sprite.visible = false
+
 func _process(delta):
 	$HUD.update_score(GameManager.score)
 	if GameManager.lives == 3:
@@ -32,9 +38,10 @@ func _process(delta):
 func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
-	$HUD.show_game_over()
-		
+	game_over_sprite.visible = true
+	animation_player.play("Game_over")
 	
+		
 func new_game():
 	GameManager.score = 0
 	$Cat.start($StartPosition.position)
@@ -62,7 +69,12 @@ func _on_mob_timer_timeout():
 	var velocity = Vector2(randf_range(150.0,250.0), 0.0)
 	mob.linear_velocity = velocity.rotated(direction)
 	add_child(mob)
-	#Si bombe alors démarrer le bombtimer, à la fin du bomb timer, virer la bombe.
+	
 
 func _on_hud_start_game():
 	pass # Replace with function body.
+
+
+func _on_animation_player_animation_finished(anim_name):
+	if anim_name == "Game_over":
+		$HUD.show_game_over()
