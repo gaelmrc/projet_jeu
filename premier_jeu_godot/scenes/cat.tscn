@@ -1,8 +1,63 @@
-[gd_scene load_steps=33 format=3 uid="uid://ciux38k0bf1a"]
+[gd_scene load_steps=49 format=3 uid="uid://ciux38k0bf1a"]
 
 [ext_resource type="Script" path="res://scenes/cat_dplcmt.gd" id="1_d6koa"]
+[ext_resource type="Texture2D" uid="uid://662wpua0dr3d" path="res://sprites/back_cat.png" id="2_gchdj"]
 [ext_resource type="Texture2D" uid="uid://ikb2dj6wkr88" path="res://sprites/cat_lat_sheet.png" id="2_j5awo"]
 [ext_resource type="Texture2D" uid="uid://bydqmct13qvvd" path="res://sprites/bestcat_front_sheet.png" id="4_01kj3"]
+[ext_resource type="AudioStream" uid="uid://yuxrgs7wyuhh" path="res://sound/miam.ogg" id="5_y8uj4"]
+[ext_resource type="AudioStream" uid="uid://cdjy7ge80yngc" path="res://sound/bomb.mp3" id="6_yeipo"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7mqu4"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(0, 0, 64, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3gsrp"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(64, 0, 64, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ob8vy"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(128, 0, 64, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qp2uu"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(192, 0, 64, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qs5x6"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(0, 74, 64, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u21l3"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(64, 74, 64, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_amy0k"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(128, 74, 64, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fl0bj"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(192, 74, 64, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_22bc7"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(0, 148, 64, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2ej3t"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(64, 148, 64, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2lwwd"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(128, 148, 64, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_3sl5s"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(192, 148, 64, 74)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tykfp"]
+atlas = ExtResource("2_gchdj")
+region = Rect2(0, 222, 64, 74)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_ea4jv"]
 atlas = ExtResource("2_j5awo")
@@ -102,6 +157,50 @@ region = Rect2(192, 150, 64, 75)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_gjvkk"]
 animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_7mqu4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3gsrp")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ob8vy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qp2uu")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qs5x6")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u21l3")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_amy0k")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_fl0bj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_22bc7")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2ej3t")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2lwwd")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_3sl5s")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tykfp")
+}],
+"loop": true,
+"name": &"back",
+"speed": 10.0
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("AtlasTexture_ea4jv")
@@ -258,7 +357,7 @@ script = ExtResource("1_d6koa")
 texture_filter = 1
 scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_gjvkk")
-animation = &"up"
+animation = &"back"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2.38419e-07)
@@ -268,6 +367,17 @@ shape = SubResource("CapsuleShape2D_eb7ut")
 libraries = {
 "": SubResource("AnimationLibrary_laeel")
 }
+
+[node name="miam" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("5_y8uj4")
+volume_db = -9.522
+
+[node name="bomb" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("6_yeipo")
+volume_db = -2.143
+pitch_scale = 0.8
+max_distance = 1999.0
+attenuation = 0.00390624
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="eat_mouse" from="." to="." method="_on_eat_mouse"]

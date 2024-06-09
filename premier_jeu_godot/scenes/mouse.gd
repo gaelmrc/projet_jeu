@@ -2,6 +2,9 @@ extends RigidBody2D
 
 var enemy_type : String
 var animation_hit
+@onready var sprite = $AnimatedSprite2D
+@onready var shader_material = sprite.material
+
 
 func _process(delta):
 	pass
@@ -38,6 +41,7 @@ func _on_b_timer_timeout():
 
 func play_animation():
 	animation_hit = get_node("AnimationPlayer")
+	shader_material.set("shader_param/is_white", true)
 	var damage_animation = animation_hit.get_animation("mouse_hit")	
 	
 	damage_animation.track_insert_key(0, 0.0, position)

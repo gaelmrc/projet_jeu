@@ -38,15 +38,18 @@ func _process(delta):
 	if velocity.x != 0:
 		$"AnimatedSprite2D2".animation = "lat"
 		$"AnimatedSprite2D2".flip_h = velocity.x > 0
-	if velocity.y != 0:
+	if velocity.y < 0:
+		$"AnimatedSprite2D2".animation = "back"
+	if velocity.y > 0:
 		$"AnimatedSprite2D2".animation = "up"
-
 
 func _on_body_entered(body):
 	hit_cat = false
 	var script = body.get_script()
 	var enemy_type = body.enemy_type
 	if enemy_type == "bomb":
+		var bomb = get_node("bomb")
+		bomb.play()
 		play_damage_animation()
 		GameManager.lose_live()
 		if GameManager.lives == 0:
@@ -58,8 +61,9 @@ func _on_body_entered(body):
 	if enemy_type != "bomb":
 		GameManager.eat_mouse = true
 		GameManager.score +=10
+		var miam = get_node("miam")
 		body.play_animation()
-		
+		miam.play()
 	
 func start(pos):
 	position = pos

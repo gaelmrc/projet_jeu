@@ -1,9 +1,18 @@
-[gd_scene load_steps=36 format=3 uid="uid://dst1yjwh8x277"]
+[gd_scene load_steps=39 format=3 uid="uid://dst1yjwh8x277"]
 
 [ext_resource type="Texture2D" uid="uid://bccw8eu3cdc60" path="res://sprites/mouse_up_sprite.png" id="1_gt748"]
 [ext_resource type="Script" path="res://scenes/mouse.gd" id="1_prfnw"]
 [ext_resource type="Texture2D" uid="uid://co0deko1k3jkf" path="res://sprites/mouse_lat_sprite.png" id="1_rbi21"]
 [ext_resource type="Texture2D" uid="uid://ct80yi5m6laqb" path="res://sprites/bomb_sheet.png" id="2_7ukri"]
+[ext_resource type="Shader" path="res://scenes/mouse.gdshader" id="2_snv2t"]
+
+[sub_resource type="GDScript" id="GDScript_7oclp"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dnl6k"]
+resource_name = "is_white"
+shader = ExtResource("2_snv2t")
+shader_parameter/is_white = true
+script = SubResource("GDScript_7oclp")
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_hy7vm"]
 atlas = ExtResource("2_7ukri")
@@ -268,11 +277,13 @@ script = ExtResource("1_prfnw")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 texture_filter = 1
+material = SubResource("ShaderMaterial_dnl6k")
+use_parent_material = true
 position = Vector2(0, -10)
 scale = Vector2(3, 3)
 sprite_frames = SubResource("SpriteFrames_1wvjx")
 animation = &"horizontal"
-frame_progress = 0.507489
+frame_progress = 0.793741
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="."]
 

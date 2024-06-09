@@ -39,6 +39,8 @@ func game_over():
 	$ScoreTimer.stop()
 	$MobTimer.stop()
 	game_over_sprite.visible = true
+	var sound_gameover = get_node("GameOver_anim/AudioStreamPlayer2D")
+	sound_gameover.play()
 	animation_player.play("Game_over")
 	
 		
